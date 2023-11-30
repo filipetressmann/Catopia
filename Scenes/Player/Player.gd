@@ -7,6 +7,7 @@ var jump_direction = Vector2.UP
 
 var motion_direction : float = 0
 var is_dashing = false
+var can_dash = false
 var dash_timer = dash_duration
 
 func _process(delta):
@@ -28,8 +29,9 @@ func horizontal_move(direction: float) -> void:
 		set_x_velocity(direction)
 	
 func dash() -> void:
-	if not is_dashing and motion_direction != 0:
+	if can_dash and not is_dashing and motion_direction != 0:
 		is_dashing = true
+		can_dash = false
 		is_affected_by_gravity = false
 		var direction = Vector2(motion_direction, 0).normalized()
 		set_movement_direction(direction*dash_force)
@@ -39,6 +41,9 @@ func stop_dash() -> void:
 	dash_timer = dash_duration
 	is_dashing = false
 	set_movement_direction(Vector2.ZERO)
+	
+func _on_floor_hit() -> void:
+	can_dash = true
 	
 func die() -> void:
 	super.die()

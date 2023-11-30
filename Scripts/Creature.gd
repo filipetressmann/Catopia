@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal damage_taken
 signal died
+signal floor_hit
 signal collision_detected(collision : KinematicCollision2D)
 
 @export var max_life : int = 0
@@ -35,4 +36,8 @@ func die() -> void:
 func _physics_process(delta):
 	if not is_on_floor() and is_affected_by_gravity:
 		velocity += Vector2.DOWN*gravity
-	move_and_slide()		
+	move_and_slide()	
+	if is_on_floor():
+		floor_hit.emit()
+	
+		

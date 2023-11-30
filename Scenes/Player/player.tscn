@@ -32,6 +32,7 @@ texture = SubResource("CanvasTexture_bgc7g")
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
+[connection signal="floor_hit" from="." to="." method="_on_floor_hit"]
 [connection signal="dash" from="PlayerInputController" to="." method="dash"]
 [connection signal="horizontal_move" from="PlayerInputController" to="." method="horizontal_move"]
 [connection signal="jump" from="PlayerInputController" to="." method="jump"]
