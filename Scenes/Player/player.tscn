@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://domk0k5a3sxcp"]
+
+[ext_resource type="PackedScene" uid="uid://bcstiodt5cnym" path="res://Scenes/Creatures/creature.tscn" id="1_fdxn2"]
+[ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="2_t0cdv"]
+[ext_resource type="PackedScene" uid="uid://cu83nr1lga80p" path="res://Scenes/Behaviours/PlayerInputController.tscn" id="3_8kyxo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g72s3"]
+size = Vector2(18, 14)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bgc7g"]
+
+[node name="Player" instance=ExtResource("1_fdxn2")]
+floor_stop_on_slope = false
+script = ExtResource("2_t0cdv")
+jump_force = 5.0
+dash_force = 5.0
+dash_duration = 0.25
+max_life = 10
+atack_rating = 1
+speed = 50
+
+[node name="Shape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_g72s3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+scale = Vector2(18, 14)
+texture = SubResource("CanvasTexture_bgc7g")
+
+[node name="PlayerInputController" parent="." index="2" instance=ExtResource("3_8kyxo")]
+
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[connection signal="dash" from="PlayerInputController" to="." method="dash"]
+[connection signal="horizontal_move" from="PlayerInputController" to="." method="horizontal_move"]
+[connection signal="jump" from="PlayerInputController" to="." method="jump"]
