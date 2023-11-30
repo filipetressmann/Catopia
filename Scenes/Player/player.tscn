@@ -1,13 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://domk0k5a3sxcp"]
+[gd_scene load_steps=8 format=3 uid="uid://domk0k5a3sxcp"]
 
 [ext_resource type="PackedScene" uid="uid://bcstiodt5cnym" path="res://Scenes/Creatures/creature.tscn" id="1_fdxn2"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="2_t0cdv"]
 [ext_resource type="PackedScene" uid="uid://cu83nr1lga80p" path="res://Scenes/Behaviours/PlayerInputController.tscn" id="3_8kyxo"]
+[ext_resource type="Texture2D" uid="uid://502frfmvvh80" path="res://Assets/orange-cat.png" id="4_c8phj"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g72s3"]
-size = Vector2(18, 14)
+[sub_resource type="CircleShape2D" id="CircleShape2D_bafku"]
+radius = 6.0
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_bgc7g"]
+[sub_resource type="Animation" id="Animation_wtoci"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xqone"]
+_data = {
+"idle": SubResource("Animation_wtoci")
+}
 
 [node name="Player" instance=ExtResource("1_fdxn2")]
 floor_stop_on_slope = false
@@ -20,17 +27,24 @@ atack_rating = 1
 speed = 50
 
 [node name="Shape" parent="." index="0"]
-shape = SubResource("RectangleShape2D_g72s3")
+shape = SubResource("CircleShape2D_bafku")
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
-scale = Vector2(18, 14)
-texture = SubResource("CanvasTexture_bgc7g")
+[node name="PlayerInputController" parent="." index="1" instance=ExtResource("3_8kyxo")]
 
-[node name="PlayerInputController" parent="." index="2" instance=ExtResource("3_8kyxo")]
-
-[node name="Camera2D" type="Camera2D" parent="." index="3"]
+[node name="Camera2D" type="Camera2D" parent="." index="2"]
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_xqone")
+}
+
+[node name="Sprite" type="Sprite2D" parent="." index="4"]
+position = Vector2(-13, 9)
+texture = ExtResource("4_c8phj")
+hframes = 4
+vframes = 10
 
 [connection signal="floor_hit" from="." to="." method="_on_floor_hit"]
 [connection signal="dash" from="PlayerInputController" to="." method="dash"]

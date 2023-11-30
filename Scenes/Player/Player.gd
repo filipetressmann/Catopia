@@ -3,9 +3,13 @@ extends "res://Scripts/Creature.gd"
 @export var jump_force : float = 3.5
 @export var dash_force : float = 5
 @export var dash_duration : float = 0.25
+
+@onready var _animation_player = $AnimationPlayer
+
 var jump_direction = Vector2.UP
 
 var motion_direction : float = 0
+
 var is_dashing = false
 var can_dash = false
 var dash_timer = dash_duration
@@ -16,8 +20,11 @@ func _process(delta):
 	if dash_timer < 0:
 		stop_dash()
 		
+	if velocity == Vector2.ZERO:
+		_animation_player.play("idle")
 	if position.y > 500:
 		position = Vector2.ZERO
+	
 
 func jump() -> void:
 	if is_on_floor() and not is_dashing: 
@@ -25,6 +32,7 @@ func jump() -> void:
 		
 func horizontal_move(direction: float) -> void:
 	if not is_dashing:
+		_animation_player.play("walk")
 		motion_direction = direction
 		set_x_velocity(direction)
 	

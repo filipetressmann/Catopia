@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4d28l02lkijp"
-path="res://.godot/imported/tilesheet_complete.png-38e5342c8f1142f60b06e124100db8c9.ctex"
+uid="uid://502frfmvvh80"
+path="res://.godot/imported/orange-cat.png-dac9b2ef27dad82c864a80ce97a11fd7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Tilesheet/tilesheet_complete.png"
-dest_files=["res://.godot/imported/tilesheet_complete.png-38e5342c8f1142f60b06e124100db8c9.ctex"]
+source_file="res://Assets/orange-cat.png"
+dest_files=["res://.godot/imported/orange-cat.png-dac9b2ef27dad82c864a80ce97a11fd7.ctex"]
 
 [params]
 
@@ -25,7 +25,7 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
