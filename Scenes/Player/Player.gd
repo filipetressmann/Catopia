@@ -6,6 +6,7 @@ extends "res://Scripts/Creature.gd"
 @export var dash_duration : float = 0.25
 
 @onready var _animation_player = $AnimationPlayer
+@onready var _sprite = $Sprite
 
 var jump_direction = Vector2.UP
 
@@ -23,6 +24,11 @@ func _process(delta):
 		
 	if velocity == Vector2.ZERO:
 		_animation_player.play("idle")
+	elif velocity.x < 0:
+		_sprite.scale.x = -1
+	elif velocity.x > 0:
+		_sprite.scale.x = 1
+	
 	if position.y > 500:
 		position = Vector2.ZERO
 	
