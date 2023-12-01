@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://domk0k5a3sxcp"]
+[gd_scene load_steps=12 format=3 uid="uid://domk0k5a3sxcp"]
 
 [ext_resource type="PackedScene" uid="uid://bcstiodt5cnym" path="res://Scenes/Creatures/creature.tscn" id="1_fdxn2"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="2_t0cdv"]
@@ -39,6 +39,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(1, 2)]
+}
 
 [sub_resource type="Animation" id="Animation_5ickd"]
 resource_name = "walk"
@@ -58,10 +70,46 @@ tracks/0/keys = {
 "values": [10, 11, 12, 13, 14, 15, 16, 17]
 }
 
+[sub_resource type="Animation" id="Animation_j4wt3"]
+resource_name = "run"
+length = 0.400005
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [20, 21]
+}
+
+[sub_resource type="Animation" id="Animation_5qyb1"]
+resource_name = "air"
+length = 0.10001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(1, 2)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xqone"]
 _data = {
 "RESET": SubResource("Animation_0bfhv"),
+"air": SubResource("Animation_5qyb1"),
 "idle": SubResource("Animation_wtoci"),
+"run": SubResource("Animation_j4wt3"),
 "walk": SubResource("Animation_5ickd")
 }
 
@@ -96,6 +144,7 @@ position = Vector2(0, -4)
 texture = ExtResource("4_c8phj")
 hframes = 10
 vframes = 5
+frame = 21
 
 [connection signal="floor_hit" from="." to="." method="_on_floor_hit"]
 [connection signal="dash" from="PlayerInputController" to="." method="dash"]

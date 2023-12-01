@@ -35,20 +35,23 @@ func _process(delta):
 
 func jump() -> void:
 	if is_on_floor() and not is_dashing: 
+		_animation_player.play("air")
 		add_to_movement_direction(jump_direction*jump_force*jump_multiplier)
 
 func low_jump():
 	if is_on_floor() and not is_dashing: 
+		_animation_player.play("air")
 		add_to_movement_direction(jump_direction*jump_force)
 
 func horizontal_move(direction: float) -> void:
 	if not is_dashing:
-		_animation_player.play("walk")
+		_animation_player.play("run")
 		motion_direction = direction
 		set_x_velocity(direction)
 	
 func dash() -> void:
 	if can_dash and not is_dashing and motion_direction != 0:
+		_animation_player.play("air")
 		is_dashing = true
 		can_dash = false
 		is_affected_by_gravity = false
