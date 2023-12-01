@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://domk0k5a3sxcp"]
+[gd_scene load_steps=10 format=3 uid="uid://domk0k5a3sxcp"]
 
 [ext_resource type="PackedScene" uid="uid://bcstiodt5cnym" path="res://Scenes/Creatures/creature.tscn" id="1_fdxn2"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="2_t0cdv"]
@@ -10,16 +10,66 @@ radius = 6.0
 
 [sub_resource type="Animation" id="Animation_wtoci"]
 resource_name = "idle"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_0bfhv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5ickd"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+step = 0.0666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14, 15, 16, 17]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xqone"]
 _data = {
-"idle": SubResource("Animation_wtoci")
+"RESET": SubResource("Animation_0bfhv"),
+"idle": SubResource("Animation_wtoci"),
+"walk": SubResource("Animation_5ickd")
 }
 
 [node name="Player" instance=ExtResource("1_fdxn2")]
 floor_stop_on_slope = false
 script = ExtResource("2_t0cdv")
-jump_force = 5.0
+jump_force = 1.25
+jump_multiplier = 1.75
 dash_force = 5.0
 dash_duration = 0.25
 max_life = 10
@@ -41,12 +91,13 @@ libraries = {
 }
 
 [node name="Sprite" type="Sprite2D" parent="." index="4"]
-position = Vector2(-13, 9)
+position = Vector2(0, -4)
 texture = ExtResource("4_c8phj")
-hframes = 4
-vframes = 10
+hframes = 10
+vframes = 5
 
 [connection signal="floor_hit" from="." to="." method="_on_floor_hit"]
 [connection signal="dash" from="PlayerInputController" to="." method="dash"]
 [connection signal="horizontal_move" from="PlayerInputController" to="." method="horizontal_move"]
 [connection signal="jump" from="PlayerInputController" to="." method="jump"]
+[connection signal="low_jump" from="PlayerInputController" to="." method="low_jump"]
