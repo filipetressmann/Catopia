@@ -1,10 +1,12 @@
 extends "res://Scripts/Creature.gd"
 
-@export var jump_force : float = 3.5
+@export var jump_force : float = 1.5
+@export var jump_multiplier : float = 5.0 
 @export var dash_force : float = 5
 @export var dash_duration : float = 0.25
 
 @onready var _animation_player = $AnimationPlayer
+@onready var _sprite = $Sprite
 
 var jump_direction = Vector2.UP
 
@@ -22,22 +24,34 @@ func _process(delta):
 		
 	if velocity == Vector2.ZERO:
 		_animation_player.play("idle")
+	elif velocity.x < 0:
+		_sprite.scale.x = -1
+	elif velocity.x > 0:
+		_sprite.scale.x = 1
+	
 	if position.y > 500:
 		position = Vector2.ZERO
 	
 
 func jump() -> void:
 	if is_on_floor() and not is_dashing: 
+		_animation_player.play("air")
+		add_to_movement_direction(jump_direction*jump_force*jump_multiplier)
+
+func low_jump():
+	if is_on_floor() and not is_dashing: 
+		_animation_player.play("air")
 		add_to_movement_direction(jump_direction*jump_force)
-		
+
 func horizontal_move(direction: float) -> void:
 	if not is_dashing:
-		_animation_player.play("walk")
+		_animation_player.play("run")
 		motion_direction = direction
 		set_x_velocity(direction)
 	
 func dash() -> void:
 	if can_dash and not is_dashing and motion_direction != 0:
+		_animation_player.play("air")
 		is_dashing = true
 		can_dash = false
 		is_affected_by_gravity = false

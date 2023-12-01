@@ -1,6 +1,7 @@
 extends Node
 
 signal jump
+signal low_jump
 signal horizontal_move(direction: float)
 signal dash
 
@@ -19,5 +20,7 @@ func _input(event):
 	var direction_vector = Vector2.ZERO
 	if event.is_action_pressed("Jump"):
 		jump.emit()	
-	if event.is_action_pressed("dash"):
+	if event.is_action_pressed("LowJump"):
+		low_jump.emit()	
+	if event.is_action_pressed("Dash"):
 		dash.emit()
