@@ -4,6 +4,7 @@ signal jump
 signal low_jump
 signal horizontal_move(direction: float)
 signal dash
+signal collect
 
 var horizontal_axis : float  = 0
 
@@ -24,3 +25,5 @@ func _input(event):
 		low_jump.emit()	
 	if event.is_action_pressed("Dash"):
 		dash.emit()
+	if event.is_action_pressed("Collect"):
+		collect.emit()
