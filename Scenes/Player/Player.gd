@@ -7,7 +7,7 @@ extends "res://Scripts/Creature.gd"
 @export var max_climbs : int = 3
 @onready var _animation_player = $AnimationPlayer
 @onready var _sprite = $Sprite
-
+@onready var _interaction_area = $Interaction_area
 var jump_direction = Vector2.UP
 
 var motion_direction : float = 0
@@ -33,8 +33,10 @@ func _process(delta):
 	if velocity == Vector2.ZERO and not is_climbing:
 		_animation_player.play("idle")
 	elif velocity.x < 0:
+		_interaction_area.scale.x = -1
 		_sprite.scale.x = -1
 	elif velocity.x > 0:
+		_interaction_area.scale.x = 1
 		_sprite.scale.x = 1
 	
 	if position.y > 500:
@@ -70,12 +72,20 @@ func _on_wall_exit() -> void:
 	if is_climbing:
 		stop_climbing()
 
+func is_touching_wall() -> bool:
+	var bodies = _interaction_area.get_overlapping_bodies()
+	for body in bodies:
+		if body is TileMap:
+			return true
+	return false
+
 func start_climbing() -> void:
 	is_climbing = true
 	_animation_player.play("climb")
 	velocity = Vector2.ZERO
 	gravity = gravity*0.2
 	jump_force = jump_force*0.8
+	
 func stop_climbing() -> void:
 	if is_on_floor():
 		_animation_player.play("idle")

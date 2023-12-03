@@ -128,7 +128,6 @@ position = Vector2(571, 362)
 position = Vector2(30, -66)
 jump_force = 1.0
 dash_force = 1.5
-max_climbs = 3
 speed = 140
 
 [node name="TileMap" type="TileMap" parent="."]

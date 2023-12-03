@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://domk0k5a3sxcp"]
+[gd_scene load_steps=16 format=3 uid="uid://domk0k5a3sxcp"]
 
 [ext_resource type="PackedScene" uid="uid://bcstiodt5cnym" path="res://Scenes/Creatures/creature.tscn" id="1_fdxn2"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="2_t0cdv"]
 [ext_resource type="PackedScene" uid="uid://cu83nr1lga80p" path="res://Scenes/Behaviours/PlayerInputController.tscn" id="3_8kyxo"]
 [ext_resource type="Texture2D" uid="uid://502frfmvvh80" path="res://Assets/orange-cat.png" id="4_c8phj"]
+[ext_resource type="Script" path="res://Scenes/Player/PlayerInterationArea.gd" id="5_tuvv6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bafku"]
 radius = 6.0
@@ -33,6 +34,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [Vector2i(1, 2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_5qyb1"]
@@ -137,6 +150,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [Vector2i(0, 4), Vector2i(1, 4)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-4, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xqone"]
 _data = {
@@ -150,7 +175,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lanip"]
-size = Vector2(6, 8)
+size = Vector2(5, 8)
 
 [node name="Player" instance=ExtResource("1_fdxn2")]
 floor_stop_on_slope = false
@@ -187,9 +212,10 @@ vframes = 5
 frame = 21
 
 [node name="Interaction_area" type="Area2D" parent="." index="5"]
+script = ExtResource("5_tuvv6")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction_area" index="0"]
-position = Vector2(9, 1)
+[node name="Shape" type="CollisionShape2D" parent="Interaction_area" index="0"]
+position = Vector2(9.5, 1)
 shape = SubResource("RectangleShape2D_lanip")
 
 [connection signal="floor_hit" from="." to="." method="_on_floor_hit"]
