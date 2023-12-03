@@ -1,10 +1,10 @@
 extends "res://Scripts/Creature.gd"
 
-@export var jump_force : float = 1.5
-@export var jump_multiplier : float = 5.0 
-@export var dash_force : float = 5
+@export var jump_force : float = 2
+@export var jump_multiplier : float = 2
+@export var dash_force : float = 2.5
 @export var dash_duration : float = 0.25
-
+@export var max_climbs : int = 3
 @onready var _animation_player = $AnimationPlayer
 @onready var _sprite = $Sprite
 
@@ -15,6 +15,9 @@ var motion_direction : float = 0
 var is_dashing = false
 var can_dash = false
 var dash_timer = dash_duration
+
+var is_climbing = false
+var climb_count = 0
 
 var in_range_trashes = []
 var in_range_items = []
@@ -27,7 +30,7 @@ func _process(delta):
 	if dash_timer < 0:
 		stop_dash()
 		
-	if velocity == Vector2.ZERO:
+	if velocity == Vector2.ZERO and not is_climbing:
 		_animation_player.play("idle")
 	elif velocity.x < 0:
 		_sprite.scale.x = -1
@@ -39,9 +42,14 @@ func _process(delta):
 	
 
 func jump() -> void:
-	if is_on_floor() and not is_dashing: 
-		_animation_player.play("air")
-		add_to_movement_direction(jump_direction*jump_force*jump_multiplier)
+	if not is_dashing:
+		if is_on_floor() and not is_climbing: 
+			_animation_player.play("air")
+			add_to_movement_direction(jump_direction*jump_force*jump_multiplier)
+		elif is_on_wall() and is_climbing and climb_count < max_climbs:
+			climb_count += 1
+			_animation_player.play("climb")
+			add_to_movement_direction(jump_direction*jump_force)
 
 func low_jump():
 	if is_on_floor() and not is_dashing: 
@@ -50,9 +58,34 @@ func low_jump():
 
 func horizontal_move(direction: float) -> void:
 	if not is_dashing:
-		_animation_player.play("run")
+		if is_on_floor() and velocity.x != 0:
+			_animation_player.play("walk")
+		elif direction != 0 and not is_climbing and is_on_wall():
+			start_climbing()
+		
 		motion_direction = direction
 		set_x_velocity(direction)
+
+func _on_wall_exit() -> void:
+	if is_climbing:
+		stop_climbing()
+
+func start_climbing() -> void:
+	is_climbing = true
+	_animation_player.play("climb")
+	velocity = Vector2.ZERO
+	gravity = gravity*0.2
+	jump_force = jump_force*0.8
+func stop_climbing() -> void:
+	if is_on_floor():
+		_animation_player.play("idle")
+	else:
+		_animation_player.play("air")
+	is_climbing = false
+	gravity = gravity*5
+	jump_force = jump_force*1.25
+	climb_count = 0
+	
 	
 func dash() -> void:
 	if can_dash and not is_dashing and motion_direction != 0:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://domk0k5a3sxcp"]
+[gd_scene load_steps=15 format=3 uid="uid://domk0k5a3sxcp"]
 
 [ext_resource type="PackedScene" uid="uid://bcstiodt5cnym" path="res://Scenes/Creatures/creature.tscn" id="1_fdxn2"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="2_t0cdv"]
@@ -86,6 +86,23 @@ tracks/0/keys = {
 "values": [20, 21]
 }
 
+[sub_resource type="Animation" id="Animation_8qydq"]
+resource_name = "sniff"
+length = 2.00002
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.6, 1.4, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [30, 31, 34, 38, 39]
+}
+
 [sub_resource type="Animation" id="Animation_5ickd"]
 resource_name = "walk"
 length = 0.8
@@ -104,40 +121,45 @@ tracks/0/keys = {
 "values": [10, 11, 12, 13, 14, 15, 16, 17]
 }
 
-[sub_resource type="Animation" id="Animation_8qydq"]
-resource_name = "sniff"
-length = 2.00002
-step = 0.2
+[sub_resource type="Animation" id="Animation_adr2d"]
+resource_name = "climb"
+length = 0.4
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath("Sprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.6, 1.4, 1.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [30, 31, 34, 38, 39]
+"values": [Vector2i(0, 4), Vector2i(1, 4)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xqone"]
 _data = {
 "RESET": SubResource("Animation_0bfhv"),
 "air": SubResource("Animation_5qyb1"),
+"climb": SubResource("Animation_adr2d"),
 "idle": SubResource("Animation_wtoci"),
 "run": SubResource("Animation_j4wt3"),
 "sniff": SubResource("Animation_8qydq"),
 "walk": SubResource("Animation_5ickd")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lanip"]
+size = Vector2(6, 8)
+
 [node name="Player" instance=ExtResource("1_fdxn2")]
 floor_stop_on_slope = false
 script = ExtResource("2_t0cdv")
 jump_force = 1.25
-jump_multiplier = 1.75
-dash_force = 5.0
+jump_multiplier = 2.0
+dash_force = 2.5
 dash_duration = 0.25
+max_climbs = 3
 max_life = 10
 atack_rating = 1
 speed = 50
@@ -164,9 +186,14 @@ hframes = 10
 vframes = 5
 frame = 21
 
+[node name="Interaction_area" type="Area2D" parent="." index="5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction_area" index="0"]
+position = Vector2(9, 1)
+shape = SubResource("RectangleShape2D_lanip")
+
 [connection signal="floor_hit" from="." to="." method="_on_floor_hit"]
-[connection signal="collect" from="PlayerInputController" to="." method="collect"]
+[connection signal="wall_exit" from="." to="." method="_on_wall_exit"]
 [connection signal="dash" from="PlayerInputController" to="." method="dash"]
 [connection signal="horizontal_move" from="PlayerInputController" to="." method="horizontal_move"]
 [connection signal="jump" from="PlayerInputController" to="." method="jump"]
-[connection signal="low_jump" from="PlayerInputController" to="." method="low_jump"]

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://lqe38cng37ol"]
+
+[ext_resource type="Texture2D" uid="uid://bkti7k4e2jrnb" path="res://Assets/tiles.png" id="1_65h8i"]
+[ext_resource type="Texture2D" uid="uid://dlqmfgacm0r27" path="res://Assets/point-light.webp" id="2_wsueb"]
+
+[node name="LightBulb" type="Sprite2D"]
+texture = ExtResource("1_65h8i")
+hframes = 11
+vframes = 4
+frame = 22
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.768627, 0.556863, 0, 1)
+shadow_enabled = true
+texture = ExtResource("2_wsueb")

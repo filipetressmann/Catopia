@@ -3,6 +3,9 @@ extends CharacterBody2D
 signal damage_taken
 signal died
 signal floor_hit
+signal floor_exit
+signal wall_hit
+signal wall_exit
 signal collision_detected(collision : KinematicCollision2D)
 
 @export var max_life : int = 0
@@ -11,6 +14,7 @@ signal collision_detected(collision : KinematicCollision2D)
 @export var is_affected_by_gravity : bool = true
 var gravity : float = 20
 var friction : float = 0.99
+var was_wall_hit = false
 
 var current_life : int = max_life
 
@@ -39,5 +43,11 @@ func _physics_process(delta):
 	move_and_slide()	
 	if is_on_floor():
 		floor_hit.emit()
+	if is_on_wall():
+		was_wall_hit = true
+		wall_hit.emit()
+	elif was_wall_hit:
+		was_wall_hit = false
+		wall_exit.emit()
 	
 		

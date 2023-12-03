@@ -13,9 +13,7 @@ func _process(delta):
 	
 func process_input() -> void:
 	var current_horizontal_axis = Input.get_axis("Left", "Right")
-	if current_horizontal_axis != horizontal_axis:
-		horizontal_axis = current_horizontal_axis
-		horizontal_move.emit(horizontal_axis)		
+	horizontal_move.emit(current_horizontal_axis)		
 	
 func _input(event):
 	var direction_vector = Vector2.ZERO
