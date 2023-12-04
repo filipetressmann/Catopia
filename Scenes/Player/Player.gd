@@ -74,12 +74,14 @@ func horizontal_move(direction: float) -> void:
 			_animation_player.play("walk")
 		elif direction != 0 and not is_climbing and can_climb:
 			start_climbing()
-		elif direction == 0 and is_climbing:
+		elif is_climbing and (direction == 0 or is_on_floor()):
 			stop_climbing()
 		motion_direction = direction
 		set_x_velocity(direction)
 
 func start_climbing() -> void:
+	if is_on_floor():
+		return
 	is_climbing = true	
 	_animation_player.play("climb")
 	velocity = Vector2.ZERO
