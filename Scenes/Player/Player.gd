@@ -1,13 +1,14 @@
 extends "res://Scripts/Creature.gd"
 
-@export var jump_force : float = 2
+@export var jump_force : float = 1
 @export var jump_multiplier : float = 2
-@export var dash_force : float = 2.5
-@export var dash_duration : float = 0.25
+@export var dash_force : float = 3
+@export var dash_duration : float = 0.125
 @export var max_climbs : int = 3
 @onready var _animation_player = $AnimationPlayer
 @onready var _sprite = $Sprite
 @onready var _interaction_area = $Interaction_area
+@onready var _climb_ray = $Climb_detector
 var jump_direction = Vector2.UP
 
 var motion_direction : float = 0
@@ -17,13 +18,16 @@ var can_dash = false
 var dash_timer = dash_duration
 
 var is_climbing = false
+var can_climb = false
 var climb_count = 0
 
 var in_range_trashes = []
 var in_range_items = []
 
 var inventory = Inventory.new()
-
+var max_gravity = gravity
+var max_jump_force = jump_force
+	
 func _process(delta):
 	if is_dashing:
 		dash_timer -= delta
@@ -32,15 +36,12 @@ func _process(delta):
 		
 	if velocity == Vector2.ZERO and not is_climbing:
 		_animation_player.play("idle")
-	elif velocity.x < 0:
-		_interaction_area.scale.x = -1
-		_sprite.scale.x = -1
-	elif velocity.x > 0:
-		_interaction_area.scale.x = 1
-		_sprite.scale.x = 1
 	
 	if position.y > 500:
 		position = Vector2.ZERO
+		
+	if is_climbing and not can_climb:
+		stop_climbing()
 	
 
 func jump() -> void:
@@ -48,8 +49,9 @@ func jump() -> void:
 		if is_on_floor() and not is_climbing: 
 			_animation_player.play("air")
 			add_to_movement_direction(jump_direction*jump_force*jump_multiplier)
-		elif is_on_wall() and is_climbing and climb_count < max_climbs:
+		elif is_climbing and climb_count < max_climbs:
 			climb_count += 1
+			print("aaa")
 			_animation_player.play("climb")
 			add_to_movement_direction(jump_direction*jump_force)
 
@@ -58,44 +60,53 @@ func low_jump():
 		_animation_player.play("air")
 		add_to_movement_direction(jump_direction*jump_force)
 
+func turn(direction: float) -> void:
+	if direction != 0:
+		_interaction_area.scale.x = direction
+		_climb_ray.scale.x = direction
+		_sprite.scale.x = direction
+	
 func horizontal_move(direction: float) -> void:
+	turn(direction)
 	if not is_dashing:
 		if is_on_floor() and velocity.x != 0:
 			_animation_player.play("walk")
-		elif direction != 0 and not is_climbing and is_on_wall():
+		elif direction != 0 and not is_climbing and can_climb:
 			start_climbing()
-		
+		elif direction == 0 and is_climbing:
+			stop_climbing()
 		motion_direction = direction
 		set_x_velocity(direction)
 
-func _on_wall_exit() -> void:
-	if is_climbing:
-		stop_climbing()
-
-func is_touching_wall() -> bool:
-	var bodies = _interaction_area.get_overlapping_bodies()
-	for body in bodies:
-		if body is TileMap:
-			return true
-	return false
-
 func start_climbing() -> void:
-	is_climbing = true
+	is_climbing = true	
 	_animation_player.play("climb")
 	velocity = Vector2.ZERO
-	gravity = gravity*0.2
-	jump_force = jump_force*0.8
+	gravity = 2
+	jump_force = 0.8
 	
 func stop_climbing() -> void:
+	_sprite.offset = Vector2.ZERO
 	if is_on_floor():
 		_animation_player.play("idle")
 	else:
 		_animation_player.play("air")
 	is_climbing = false
-	gravity = gravity*5
-	jump_force = jump_force*1.25
+	gravity = max_gravity
+	jump_force = max_jump_force
 	climb_count = 0
-	
+func attack() -> void:
+	var bodies = _interaction_area.get_overlapping_bodies()
+	print(bodies)
+	for body in bodies:
+		if body is PhysicsBody2D:
+			var b = body as RigidBody2D
+			print(b)
+func _on_touch_wall(body) ->void:
+	can_climb = true
+
+func _on_leave_wall(body) -> void:
+	can_climb = false
 	
 func dash() -> void:
 	if can_dash and not is_dashing and motion_direction != 0:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7eloaonkw7fk"]
+[gd_scene load_steps=9 format=3 uid="uid://b7eloaonkw7fk"]
 
 [ext_resource type="PackedScene" uid="uid://domk0k5a3sxcp" path="res://Scenes/Player/player.tscn" id="2_0gcqk"]
 [ext_resource type="Texture2D" uid="uid://bkti7k4e2jrnb" path="res://Assets/tiles.png" id="2_4haqv"]
 [ext_resource type="PackedScene" uid="uid://lqe38cng37ol" path="res://Scenes/Objects/light_bulb.tscn" id="2_e0wqa"]
-[ext_resource type="PackedScene" path="res://Scenes/Objects/trash.tscn" id="3_o0fds"]
+[ext_resource type="PackedScene" uid="uid://c000a37j71vmv" path="res://Scenes/Objects/trash.tscn" id="3_o0fds"]
+[ext_resource type="PackedScene" uid="uid://c5v3kqt40f37h" path="res://Scenes/Objects/lata.tscn" id="5_irwrl"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ml01g"]
 resource_name = "light_buib"
@@ -103,12 +104,10 @@ texture_region_size = Vector2i(20, 20)
 8:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:1/0/physics_layer_0/angular_velocity = 0.0
 8:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, -10, -10, -9.03771, 10, -9.0819, 10, -10)
-8:1/0/physics_layer_0/polygon_1/points = PackedVector2Array(-10, 10, 10, 10, 10, 8.94932, -10, 8.99352)
 9:1/0 = 0
 9:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:1/0/physics_layer_0/angular_velocity = 0.0
 9:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, -10, -10, -9.03771, 10, -9.0819, 10, -10)
-9:1/0/physics_layer_0/polygon_1/points = PackedVector2Array(-10, 10, 10, 10, 10, 8.94932, -10, 8.99352)
 3:2/0 = 0
 3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:2/0/physics_layer_0/angular_velocity = 0.0
@@ -127,7 +126,6 @@ position = Vector2(571, 362)
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_0gcqk")]
 position = Vector2(30, -66)
 jump_force = 1.0
-dash_force = 1.5
 speed = 140
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -161,3 +159,6 @@ position = Vector2(286, 262)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.254902, 0.254902, 0.254902, 1)
+
+[node name="lata" parent="." instance=ExtResource("5_irwrl")]
+position = Vector2(133, -76)

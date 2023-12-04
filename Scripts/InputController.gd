@@ -5,7 +5,7 @@ signal low_jump
 signal horizontal_move(direction: float)
 signal dash
 signal collect
-
+signal fire1
 var horizontal_axis : float  = 0
 
 func _process(delta):
@@ -25,3 +25,5 @@ func _input(event):
 		dash.emit()
 	if event.is_action_pressed("Collect"):
 		collect.emit()
+	if event.is_action_pressed("Fire1"):
+		fire1.emit()

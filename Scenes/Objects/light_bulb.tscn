@@ -1,7 +1,69 @@
-[gd_scene load_steps=3 format=3 uid="uid://lqe38cng37ol"]
+[gd_scene load_steps=6 format=3 uid="uid://lqe38cng37ol"]
 
 [ext_resource type="Texture2D" uid="uid://bkti7k4e2jrnb" path="res://Assets/tiles.png" id="1_65h8i"]
 [ext_resource type="Texture2D" uid="uid://dlqmfgacm0r27" path="res://Assets/point-light.webp" id="2_wsueb"]
+
+[sub_resource type="Animation" id="Animation_e3gcm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_wbr3h"]
+resource_name = "change_light"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3, 4.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 2), Vector2i(1, 2), Vector2i(2, 2), Vector2i(1, 2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5, 3, 4.5),
+"transitions": PackedFloat32Array(1, 6.06286, 6.06287, 6.27667),
+"update": 0,
+"values": [1.0, 0.75, 0.5, 0.75]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wsnib"]
+_data = {
+"RESET": SubResource("Animation_e3gcm"),
+"change_light": SubResource("Animation_wbr3h")
+}
 
 [node name="LightBulb" type="Sprite2D"]
 texture = ExtResource("1_65h8i")
@@ -13,3 +75,9 @@ frame = 22
 color = Color(0.768627, 0.556863, 0, 1)
 shadow_enabled = true
 texture = ExtResource("2_wsueb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "change_light"
+libraries = {
+"": SubResource("AnimationLibrary_wsnib")
+}
