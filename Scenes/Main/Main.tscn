@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b7eloaonkw7fk"]
+[gd_scene load_steps=10 format=3 uid="uid://b7eloaonkw7fk"]
 
+[ext_resource type="Texture2D" uid="uid://d02fu67k3kv2s" path="res://Assets/background.png" id="1_w64hn"]
 [ext_resource type="PackedScene" uid="uid://domk0k5a3sxcp" path="res://Scenes/Player/player.tscn" id="2_0gcqk"]
 [ext_resource type="Texture2D" uid="uid://bkti7k4e2jrnb" path="res://Assets/tiles.png" id="2_4haqv"]
 [ext_resource type="PackedScene" uid="uid://lqe38cng37ol" path="res://Scenes/Objects/light_bulb.tscn" id="2_e0wqa"]
@@ -123,9 +124,20 @@ sources/0 = SubResource("TileSetScenesCollectionSource_ml01g")
 [node name="Main" type="Node2D"]
 position = Vector2(571, 362)
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_repeat = 3
+position = Vector2(446, 213)
+motion_offset = Vector2(300, 200)
+motion_mirroring = Vector2(300, 200)
+
+[node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("1_w64hn")
+
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_0gcqk")]
 position = Vector2(30, -66)
-jump_force = 1.0
+jump_force = 1.5
 speed = 140
 
 [node name="TileMap" type="TileMap" parent="."]
