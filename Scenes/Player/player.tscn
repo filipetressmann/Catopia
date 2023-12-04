@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://domk0k5a3sxcp"]
+[gd_scene load_steps=16 format=3 uid="uid://domk0k5a3sxcp"]
 
 [ext_resource type="PackedScene" uid="uid://bcstiodt5cnym" path="res://Scenes/Creatures/creature.tscn" id="1_fdxn2"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="2_t0cdv"]
 [ext_resource type="PackedScene" uid="uid://cu83nr1lga80p" path="res://Scenes/Behaviours/PlayerInputController.tscn" id="3_8kyxo"]
 [ext_resource type="Texture2D" uid="uid://502frfmvvh80" path="res://Assets/orange-cat.png" id="4_c8phj"]
-[ext_resource type="Script" path="res://Scenes/Player/PlayerInterationArea.gd" id="5_tuvv6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bafku"]
 radius = 6.0
@@ -175,7 +174,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lanip"]
-size = Vector2(5, 8)
+size = Vector2(5, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wi51g"]
 size = Vector2(5, 2)
@@ -188,6 +187,7 @@ jump_multiplier = 2.0
 dash_force = 3.0
 dash_duration = 0.125
 max_climbs = 3
+throw_force = 400.0
 max_life = 10
 atack_rating = 1
 speed = 50
@@ -216,12 +216,11 @@ vframes = 5
 frame = 21
 
 [node name="Interaction_area" type="Area2D" parent="." index="5"]
-script = ExtResource("5_tuvv6")
 
 [node name="Shape" type="CollisionShape2D" parent="Interaction_area" index="0"]
-position = Vector2(9.5, 1)
+position = Vector2(9.5, 1.5)
 shape = SubResource("RectangleShape2D_lanip")
-disabled = true
+debug_color = Color(0.94902, 0, 0.568627, 0.419608)
 
 [node name="Climb_detector" type="Area2D" parent="." index="6"]
 
@@ -234,5 +233,6 @@ shape = SubResource("RectangleShape2D_wi51g")
 [connection signal="fire1" from="PlayerInputController" to="." method="attack"]
 [connection signal="horizontal_move" from="PlayerInputController" to="." method="horizontal_move"]
 [connection signal="jump" from="PlayerInputController" to="." method="jump"]
+[connection signal="body_entered" from="Interaction_area" to="." method="p"]
 [connection signal="body_entered" from="Climb_detector" to="." method="_on_touch_wall"]
 [connection signal="body_exited" from="Climb_detector" to="." method="_on_leave_wall"]

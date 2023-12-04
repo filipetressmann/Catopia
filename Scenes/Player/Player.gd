@@ -5,6 +5,7 @@ extends "res://Scripts/Creature.gd"
 @export var dash_force : float = 3
 @export var dash_duration : float = 0.125
 @export var max_climbs : int = 3
+@export var throw_force : float = 400
 @onready var _animation_player = $AnimationPlayer
 @onready var _sprite = $Sprite
 @onready var _interaction_area = $Interaction_area
@@ -65,7 +66,7 @@ func turn(direction: float) -> void:
 		_interaction_area.scale.x = direction
 		_climb_ray.scale.x = direction
 		_sprite.scale.x = direction
-	
+
 func horizontal_move(direction: float) -> void:
 	turn(direction)
 	if not is_dashing:
@@ -95,13 +96,16 @@ func stop_climbing() -> void:
 	gravity = max_gravity
 	jump_force = max_jump_force
 	climb_count = 0
+	
 func attack() -> void:
 	var bodies = _interaction_area.get_overlapping_bodies()
 	print(bodies)
 	for body in bodies:
 		if body is PhysicsBody2D:
 			var b = body as RigidBody2D
-			print(b)
+			var throw_direction = (b.position - position).normalized()
+			print(throw_direction)
+			b.apply_central_impulse(throw_direction*throw_force)
 func _on_touch_wall(body) ->void:
 	can_climb = true
 

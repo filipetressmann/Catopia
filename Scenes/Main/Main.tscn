@@ -126,6 +126,7 @@ position = Vector2(571, 362)
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_0gcqk")]
 position = Vector2(30, -66)
 jump_force = 1.0
+throw_force = 400.0
 speed = 140
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -161,4 +162,4 @@ position = Vector2(286, 262)
 color = Color(0.254902, 0.254902, 0.254902, 1)
 
 [node name="lata" parent="." instance=ExtResource("5_irwrl")]
-position = Vector2(133, -76)
+position = Vector2(-211, -168)
