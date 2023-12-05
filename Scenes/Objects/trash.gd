@@ -1,7 +1,7 @@
 extends Area2D
 
 @onready var sprite = $Sprite
-@onready var item = preload("res://Scenes/Objects/Item.tscn")
+@onready var drop = preload("res://Scenes/Objects/drop.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,7 +15,8 @@ func _process(delta):
 
 
 func rummage():
-	var loot = item.instantiate()
+	var loot = drop.instantiate()
+	loot.set_random()
 	loot.position = position
 	
 	get_parent().add_child(loot)

@@ -99,16 +99,22 @@ func stop_climbing() -> void:
 	gravity = max_gravity
 	jump_force = max_jump_force
 	climb_count = 0
-	
+
+
 func attack() -> void:
 	var bodies = _interaction_area.get_overlapping_bodies()
-	print(bodies)
+	
 	for body in bodies:
 		if body is PhysicsBody2D:
 			var b = body as RigidBody2D
-			var throw_direction = (b.position - position).normalized()
+			var throw_direction = (b.global_position - global_position).normalized()
 			print(throw_direction)
 			b.apply_central_impulse(throw_direction*throw_force)
+	
+	if in_range_trashes != []:
+		in_range_trashes[0].rummage() # Função pro lixo dropar itens
+		in_range_trashes.pop_front()
+
 func _on_touch_wall(body) ->void:
 	can_climb = true
 
@@ -138,18 +144,26 @@ func _on_floor_hit() -> void:
 func die() -> void:
 	super.die()
 
+func _on_interaction_area_body_entered(body):
+	print(body.get_groups())
+	
+	if body.is_in_group("drop"):
+		in_range_items.append(body)
+
+func _on_interaction_area_body_exited(body):
+	print(body.get_groups())
+
+	if body.is_in_group("drop") and in_range_items.has(body):
+		in_range_items.erase(body)
+
 # Coleta o primeiro item que colidiu, ou então o primeiro lixo
 func collect():
+	print(in_range_items)
 	if in_range_items != []:
 		inventory.add_item(in_range_items[0].get_item_name())
 		in_range_items[0].queue_free()
 		in_range_items.pop_front()
 		inventory.debug()
-	elif in_range_trashes != []:
-		_animation_player.play("sniff") # Adicionar animation lock
-		print(_animation_player.current_animation)
-		in_range_trashes[0].rummage() # Função pro lixo dropar itens
-		in_range_trashes.pop_front()
 
 # Entrou em um novo lixo
 func append_trash(body: Node2D) -> void:
@@ -170,3 +184,4 @@ func join_item(body: Node2D) -> void:
 func leave_item(body: Node2D) -> void:
 	if body.is_in_group("item") and in_range_items.has(body):
 		in_range_items.erase(body)
+

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3i50321v1d1a"]
+
+[ext_resource type="Script" path="res://Scenes/Objects/drop.gd" id="1_bs7qf"]
+[ext_resource type="Texture2D" uid="uid://c2v6khbmx2tgr" path="res://Assets/resource-items.png" id="2_4tn44"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7rcs8"]
+radius = 4.0
+
+[node name="drop" type="RigidBody2D" groups=["drop"]]
+mass = 0.5
+script = ExtResource("1_bs7qf")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_4tn44")
+hframes = 7
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7rcs8")
