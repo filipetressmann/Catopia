@@ -202,10 +202,10 @@ zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_xqone")
 }
-autoplay = "idle"
 
 [node name="Sprite" type="Sprite2D" parent="." index="4"]
 position = Vector2(0, -4)
@@ -228,10 +228,12 @@ position = Vector2(9.5, -4)
 shape = SubResource("RectangleShape2D_wi51g")
 
 [connection signal="floor_hit" from="." to="." method="_on_floor_hit"]
+[connection signal="climb" from="PlayerInputController" to="." method="climb"]
 [connection signal="dash" from="PlayerInputController" to="." method="dash"]
 [connection signal="fire1" from="PlayerInputController" to="." method="attack"]
 [connection signal="horizontal_move" from="PlayerInputController" to="." method="horizontal_move"]
 [connection signal="jump" from="PlayerInputController" to="." method="jump"]
+[connection signal="stop_climb" from="PlayerInputController" to="." method="stop_climbing"]
 [connection signal="body_entered" from="Interaction_area" to="." method="p"]
 [connection signal="body_entered" from="Climb_detector" to="." method="_on_touch_wall"]
 [connection signal="body_exited" from="Climb_detector" to="." method="_on_leave_wall"]

@@ -27,7 +27,7 @@ var in_range_items = []
 
 var inventory = Inventory.new()
 var max_gravity = gravity
-var max_jump_force = jump_force
+@onready var max_jump_force = jump_force
 	
 func _process(delta):
 	if is_dashing:
@@ -72,16 +72,14 @@ func horizontal_move(direction: float) -> void:
 	if not is_dashing:
 		if is_on_floor() and velocity.x != 0:
 			_animation_player.play("walk")
-		elif direction != 0 and not is_climbing and can_climb:
-			start_climbing()
-		elif is_climbing and (direction == 0 or is_on_floor()):
-			stop_climbing()
 		motion_direction = direction
 		set_x_velocity(direction)
-
+func climb() -> void:
+	print(can_climb)
+	if can_climb:
+		start_climbing()
+		
 func start_climbing() -> void:
-	if is_on_floor():
-		return
 	is_climbing = true	
 	_animation_player.play("climb")
 	velocity = Vector2.ZERO
@@ -89,6 +87,9 @@ func start_climbing() -> void:
 	jump_force = 0.8
 	
 func stop_climbing() -> void:
+	
+	if not is_climbing:
+		return
 	_sprite.offset = Vector2.ZERO
 	if is_on_floor():
 		_animation_player.play("idle")
@@ -115,7 +116,7 @@ func _on_leave_wall(body) -> void:
 	can_climb = false
 	
 func dash() -> void:
-	if can_dash and not is_dashing and motion_direction != 0:
+	if can_dash and not is_dashing and motion_direction != 0 and not is_climbing:
 		_animation_player.play("air")
 		is_dashing = true
 		can_dash = false

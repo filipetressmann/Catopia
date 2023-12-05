@@ -129,15 +129,13 @@ position = Vector2(571, 362)
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 texture_repeat = 3
 position = Vector2(446, 213)
-motion_offset = Vector2(300, 200)
 motion_mirroring = Vector2(300, 200)
 
-[node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 texture = ExtResource("1_w64hn")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_0gcqk")]
-position = Vector2(30, -66)
-jump_force = 1.5
+position = Vector2(-571, -370)
 speed = 140
 
 [node name="TileMap" type="TileMap" parent="."]
