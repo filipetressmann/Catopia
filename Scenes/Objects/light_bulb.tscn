@@ -87,9 +87,9 @@ size = Vector2(14, 6)
 
 [node name="LightBulb" type="Sprite2D"]
 texture = ExtResource("1_65h8i")
-hframes = 11
+hframes = 13
 vframes = 4
-frame = 22
+frame = 26
 script = ExtResource("2_3fb8i")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
@@ -98,10 +98,10 @@ shadow_enabled = true
 texture = ExtResource("2_wsueb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_wsnib")
 }
+autoplay = "idle"
 
 [node name="Timer" type="Timer" parent="."]
 
