@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://k1ixgkpbt0uh"]
+
+[ext_resource type="Texture2D" uid="uid://bkti7k4e2jrnb" path="res://Assets/tiles.png" id="1_s8srg"]
+[ext_resource type="Script" path="res://Scenes/Objects/water.gd" id="2_mfuil"]
+
+[sub_resource type="Animation" id="Animation_ucl5t"]
+resource_name = "idle"
+loop_mode = 1
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [52, 53, 54]
+}
+
+[sub_resource type="Animation" id="Animation_87hd2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [52]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1i8y6"]
+_data = {
+"RESET": SubResource("Animation_87hd2"),
+"idle": SubResource("Animation_ucl5t")
+}
+
+[node name="Water" type="Sprite2D"]
+texture = ExtResource("1_s8srg")
+hframes = 13
+vframes = 5
+frame = 52
+script = ExtResource("2_mfuil")
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1i8y6")
+}
