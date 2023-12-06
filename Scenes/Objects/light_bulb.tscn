@@ -98,10 +98,10 @@ shadow_enabled = true
 texture = ExtResource("2_wsueb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "idle"
 libraries = {
 "": SubResource("AnimationLibrary_wsnib")
 }
-autoplay = "idle"
 
 [node name="Timer" type="Timer" parent="."]
 

@@ -54,6 +54,7 @@ texture_region_size = Vector2i(20, 20)
 0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:3/0/physics_layer_0/angular_velocity = 0.0
 0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-10, -10, 10, -10, 10, -8.10277, -10, -8.24308)
+0:3/0/physics_layer_0/polygon_0/one_way = true
 1:3/0 = 0
 1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:3/0/physics_layer_0/angular_velocity = 0.0
@@ -137,6 +138,7 @@ texture = ExtResource("1_w64hn")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("2_0gcqk")]
 position = Vector2(-316, -105)
+throw_force = 250.0
 speed = 140
 
 [node name="TileMap" type="TileMap" parent="."]
