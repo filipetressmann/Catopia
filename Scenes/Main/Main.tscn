@@ -218,9 +218,13 @@ motion_mirroring = Vector2(300, 200)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 texture = ExtResource("1_w64hn")
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("2_0gcqk")]
-position = Vector2(-316, -105)
+[node name="PlayerRespawnPoint" type="Node2D" parent="."]
+position = Vector2(-172, -106)
+
+[node name="Player" parent="." node_paths=PackedStringArray("respawn_point") groups=["player"] instance=ExtResource("2_0gcqk")]
+position = Vector2(-172, -106)
 throw_force = 250.0
+respawn_point = NodePath("../PlayerRespawnPoint")
 speed = 140
 
 [node name="Collectables" type="Node" parent="."]
