@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkd8hfutfxltq"]
+[gd_scene load_steps=7 format=3 uid="uid://bkd8hfutfxltq"]
 
 [ext_resource type="Texture2D" uid="uid://bkti7k4e2jrnb" path="res://Assets/tiles.png" id="1_oe21k"]
 [ext_resource type="Script" path="res://Scenes/Objects/water_surface.gd" id="2_4vkbc"]
@@ -41,6 +41,9 @@ _data = {
 "idle": SubResource("Animation_ucl5t")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lugmi"]
+size = Vector2(20, 9)
+
 [node name="WaterSurface" type="Sprite2D"]
 texture = ExtResource("1_oe21k")
 hframes = 13
@@ -52,3 +55,11 @@ script = ExtResource("2_4vkbc")
 libraries = {
 "": SubResource("AnimationLibrary_1i8y6")
 }
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_lugmi")
+
+[connection signal="body_entered" from="Area2D" to="." method="body_submerged"]
