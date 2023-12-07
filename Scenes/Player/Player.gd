@@ -6,10 +6,12 @@ extends "res://Scripts/Creature.gd"
 @export var dash_duration : float = 0.125
 @export var max_climbs : int = 3
 @export var throw_force : float = 400
+@export var respawn_point : Node = null
 @onready var _animation_player = $AnimationPlayer
 @onready var _sprite = $Sprite
 @onready var _interaction_area = $Interaction_area
 @onready var _climb_ray = $Climb_detector
+
 var jump_direction = Vector2.UP
 
 var motion_direction : float = 0
@@ -39,11 +41,16 @@ func _process(delta):
 		_animation_player.play("idle")
 	
 	if position.y > 500:
-		position = Vector2.ZERO
+		respawn()
 		
 	if is_climbing and not can_climb:
 		stop_climbing()
 	
+func respawn() -> void:
+	if respawn_point == null:
+		position = Vector2.ZERO
+	else:
+		position = respawn_point.position
 
 func jump() -> void:
 	if not is_dashing:

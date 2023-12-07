@@ -9,3 +9,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func body_submerged(body) -> void:
+	if body.is_in_group("player"):
+		body.respawn()
+	elif body.is_in_group("drop"):
+		body.queue_free()
