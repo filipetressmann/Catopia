@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dq0c2oiy2s0am"]
+[gd_scene load_steps=4 format=3 uid="uid://bpwmok4uu7dra"]
 
 [ext_resource type="PackedScene" uid="uid://domk0k5a3sxcp" path="res://Scenes/Player/player.tscn" id="1_bbgja"]
-[ext_resource type="TileSet" uid="uid://b3snjgq0a6bdg" path="res://Scenes/Main/Main.tres" id="2_r6aqr"]
+[ext_resource type="TileSet" uid="uid://venenbh0d0a6" path="res://Scenes/Main/Main.tres" id="2_r6aqr"]
 [ext_resource type="PackedScene" uid="uid://c000a37j71vmv" path="res://Scenes/Objects/trash.tscn" id="3_874gw"]
 
 [node name="Deposit" type="Node2D"]
@@ -23,7 +23,7 @@ layer_0/tile_data = PackedInt32Array(65535, 3, 0, 0, 3, 0, 1, 3, 0, 2, 720899, 0
 [node name="Trashes" type="Node" parent="."]
 
 [node name="Trash" parent="Trashes" instance=ExtResource("3_874gw")]
-position = Vector2(231, -1)
+position = Vector2(231, 0)
 
 [node name="Trash2" parent="Trashes" instance=ExtResource("3_874gw")]
 position = Vector2(109, -140)
@@ -35,19 +35,19 @@ position = Vector2(179, -120)
 position = Vector2(330, -80)
 
 [node name="Trash5" parent="Trashes" instance=ExtResource("3_874gw")]
-position = Vector2(354, 59)
+position = Vector2(354, 60)
 
 [node name="Trash6" parent="Trashes" instance=ExtResource("3_874gw")]
-position = Vector2(-128, -81)
+position = Vector2(-128, -80)
 
 [node name="Trash7" parent="Trashes" instance=ExtResource("3_874gw")]
-position = Vector2(470, -81)
+position = Vector2(470, -80)
 
 [node name="Trash8" parent="Trashes" instance=ExtResource("3_874gw")]
-position = Vector2(550, -125)
+position = Vector2(550, -120)
 
 [node name="Trash9" parent="Trashes" instance=ExtResource("3_874gw")]
-position = Vector2(249, -261)
+position = Vector2(249, -260)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.254902, 0.254902, 0.254902, 1)

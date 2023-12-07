@@ -1,8 +1,8 @@
-[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://b3snjgq0a6bdg"]
+[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://venenbh0d0a6"]
 
 [ext_resource type="PackedScene" uid="uid://lqe38cng37ol" path="res://Scenes/Objects/light_bulb.tscn" id="1_djpn5"]
-[ext_resource type="PackedScene" uid="uid://k1ixgkpbt0uh" path="res://Scenes/Objects/water.tscn" id="2_wo5ad"]
-[ext_resource type="PackedScene" uid="uid://bkd8hfutfxltq" path="res://Scenes/Objects/water_surface.tscn" id="3_g8al4"]
+[ext_resource type="PackedScene" path="res://Scenes/Objects/water.tscn" id="2_wo5ad"]
+[ext_resource type="PackedScene" path="res://Scenes/Objects/water_surface.tscn" id="3_g8al4"]
 [ext_resource type="Texture2D" uid="uid://bkti7k4e2jrnb" path="res://Assets/tiles.png" id="4_vti8f"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ml01g"]

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://d02fu67k3kv2s" path="res://Assets/background.png" id="1_w64hn"]
 [ext_resource type="PackedScene" uid="uid://domk0k5a3sxcp" path="res://Scenes/Player/player.tscn" id="2_0gcqk"]
 [ext_resource type="PackedScene" uid="uid://c000a37j71vmv" path="res://Scenes/Objects/trash.tscn" id="3_o0fds"]
-[ext_resource type="TileSet" uid="uid://b3snjgq0a6bdg" path="res://Scenes/Main/Main.tres" id="4_0n5v3"]
+[ext_resource type="TileSet" uid="uid://venenbh0d0a6" path="res://Scenes/Main/Main.tres" id="4_0n5v3"]
 [ext_resource type="PackedScene" uid="uid://c5v3kqt40f37h" path="res://Scenes/Objects/lata.tscn" id="5_irwrl"]
 
 [node name="Main" type="Node2D"]
@@ -23,10 +23,9 @@ texture = ExtResource("1_w64hn")
 [node name="PlayerRespawnPoint" type="Node2D" parent="."]
 position = Vector2(-172, -106)
 
-[node name="Player" parent="." node_paths=PackedStringArray("respawn_point") groups=["player"] instance=ExtResource("2_0gcqk")]
+[node name="Player" parent="." groups=["player"] instance=ExtResource("2_0gcqk")]
 position = Vector2(-172, -106)
 throw_force = 250.0
-respawn_point = NodePath("../PlayerRespawnPoint")
 speed = 140
 
 [node name="Collectables" type="Node" parent="."]
